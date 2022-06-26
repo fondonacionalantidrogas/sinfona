@@ -1,0 +1,694 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <div class="brand-logo img" align="center">
+      <img src="assets/images/banner/cintillo-fona-carabobo.jpg" class="banner-fona" alt="banner" height="105px"  />
+      </div> 
+      <br>
+    <app-content-header [contentHeader]="contentHeader"></app-content-header>
+    <!-- Horizontal Wizard -->
+    <div class="container">
+    <section class="horizontal-wizard">
+      <div id="stepper1" class="bs-stepper horizontal-wizard-example">
+        <div class="bs-stepper-header">
+          <div class="step" data-target="#account-details">
+            <button class="step-trigger">
+              <span class="bs-stepper-box">1</span>
+              <span class="bs-stepper-label">
+                <span class="bs-stepper-title">Datos de la Empresa</span>
+                <span class="bs-stepper-subtitle">Datos de la empresa</span>
+              </span>
+            </button>
+          </div>
+          <div class="line"><i data-feather="chevron-right" class="font-medium-2"></i></div>
+          <div class="step" data-target="#personal-info">
+            <button class="step-trigger">
+              <span class="bs-stepper-box">2</span>
+              <span class="bs-stepper-label">
+                <span class="bs-stepper-title">Datos Legales y Financieros</span>
+                <span class="bs-stepper-subtitle">Datos Legales y Financieros</span>
+              </span>
+            </button>
+          </div>
+          <div class="line"><i data-feather="chevron-right" class="font-medium-2"></i></div>
+          <div class="step" data-target="#address">
+            <button class="step-trigger">
+              <span class="bs-stepper-box">3</span>
+              <span class="bs-stepper-label">
+                <span class="bs-stepper-title">Datos del Representante Legal</span>
+                <span class="bs-stepper-subtitle">Datos del Representante Legal</span>
+              </span>
+            </button>
+          </div>
+          <div class="line"><i data-feather="chevron-right" class="font-medium-2"></i></div>
+          <div class="step" data-target="#social-links">
+            <button class="step-trigger">
+              <span class="bs-stepper-box">4</span>
+              <span class="bs-stepper-label">
+                <span class="bs-stepper-title">Registrar Empresa</span>
+                <span class="bs-stepper-subtitle">Registro Completado</span>
+              </span>
+            </button>
+          </div>
+        </div>
+        <div class="bs-stepper-content">
+          <form (ngSubmit)="(HWForm.form.valid)" #HWForm="ngForm">
+            <div id="account-details" class="content">
+              <form #accountDetailsForm="ngForm">
+                <div class="content-header">
+                  <h5 class="mb-0">Account Details</h5>
+                  <small class="text-muted">Enter Your Account Details.</small>
+                </div>
+
+                <div class="row">
+                  <div class="form-group col-md-2">
+                    <label class="form-label">Tipo de RIF</label>
+                    <ng-select
+                    [items]="selectRIF"
+                    placeholder="Seleccione"
+                    bindLabel="name"
+                    required
+                    autocomplete="off"
+                    name="tipo_rif"
+                    [(ngModel)]="tipoRif"
+                    #TipoRifRef="ngModel"
+                    [class.error]="!TipoRifRef.valid && accountDetailsForm.submitted"
+                    >
+                  </ng-select>
+                  <span *ngIf="accountDetailsForm.submitted && TipoRifRef.invalid" class="invalid-form">
+                    <small class="form-text text-danger" *ngIf="TipoRifRef.errors.required"
+                      >Tipo de RIF es requerido!</small
+                    >
+                  </span>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label class="form-label">RIF</label>
+                    <input
+                      [(ngModel)]="rif"
+                      #RifRef="ngModel"
+                      required
+                      autocomplete="off"
+                      type="number"
+                      name="rif"
+                      class="form-control"
+                      [class.error]="!RifRef.valid && accountDetailsForm.submitted"
+                      placeholder="Ingrese el RIF de la Empresa"
+                    />
+                    <span *ngIf="accountDetailsForm.submitted && RifRef.invalid" class="invalid-form">
+                      <small class="form-text text-danger" *ngIf="RifRef.errors.required"
+                        >RIF es requerido!</small
+                      >
+                    </span>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label class="form-label">Razon Social</label>
+                    <input
+                    [(ngModel)]="razonSocial"
+                    #RazonSocial="ngModel"
+                    required
+                    autocomplete="off"
+                    [class.error]="!RazonSocial.valid && accountDetailsForm.submitted"
+                    type="text"
+                    name="razon_social"
+                    class="form-control"
+                    placeholder="Ingrese Razon Social"
+                  />
+                  <span *ngIf="accountDetailsForm.submitted && RazonSocial.invalid" class="invalid-form">
+                    <small class="form-text text-danger" *ngIf="RazonSocial.errors.required"
+                      >Razon Social es requerido!</small
+                    >
+                  </span>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label class="form-label" >Cantidad de Empleados</label>
+                    <input
+                      [(ngModel)]="cantidadEmpleado"
+                      #CantidadEmpleado="ngModel"
+                      required
+                      autocomplete="off"
+                      type="number"
+                      name="cantidad_empleado"
+                      class="form-control"
+                      [class.error]="!CantidadEmpleado.valid && accountDetailsForm.submitted"
+                      placeholder="Ingrese Cantidad de Empleados"
+                    />
+                    <span *ngIf="accountDetailsForm.submitted && CantidadEmpleado.invalid" class="invalid-form">
+                      <small class="form-text text-danger" *ngIf="CantidadEmpleado.errors.required"
+                        >Cantidad de Empleados es requerido!</small
+                      >
+                    </span>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label class="form-label">Dirección</label>
+                    <textarea
+                    class="form-control char-textarea"
+                    id="textarea-counter"
+                    [(ngModel)]="direccion"
+                    #Direccion="ngModel"
+                    name="direccion"
+                    required
+                    autocomplete="off"
+                    [class.error]="!Direccion.valid && accountDetailsForm.submitted"
+                    rows="1"
+                    placeholder="Ingrese Direccion de la Empresa"
+                  ></textarea>
+                  <span *ngIf="accountDetailsForm.submitted && Direccion.invalid" class="invalid-form">
+                    <small class="form-text text-danger" *ngIf="Direccion.errors.required"
+                      >Dirección es requerido!</small
+                    >
+                  </span>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label class="form-label">Estados</label>
+                    <ng-select
+                      [items]="selectEstados"
+                      placeholder="Seleccione Estados"
+                      bindLabel="name"
+                      name="estados"
+                      [(ngModel)]="estados"
+                      #Estados="ngModel"
+                      required
+                      autocomplete="off"
+                      [class.error]="!Estados.valid && accountDetailsForm.submitted"  
+                      >
+                    </ng-select>
+                    <span *ngIf="accountDetailsForm.submitted && Estados.invalid" class="invalid-form">
+                      <small class="form-text text-danger" *ngIf="Estados.errors.required"
+                        >Estado es requerido!</small
+                      >
+                    </span>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label class="form-label">Municipios</label>
+                    <ng-select
+                      [items]="selectMunicipios"
+                      placeholder="Seleccione Municipios"
+                      bindLabel="name"
+                      name="municipios"
+                      [(ngModel)]="municipios"
+                      #Municipios="ngModel"
+                      required
+                      autocomplete="off"
+                      [class.error]="!Municipios.valid && accountDetailsForm.submitted"  
+                      >
+                    </ng-select>
+                    <span *ngIf="accountDetailsForm.submitted && Municipios.invalid" class="invalid-form">
+                      <small class="form-text text-danger" *ngIf="Municipios.errors.required"
+                        >Municipio es requerido!</small
+                      >
+                    </span>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label class="form-label">Telefono</label>
+                    <input
+                      [(ngModel)]="telefono"
+                      #Telefono="ngModel"
+                      required
+                      type="number"
+                      autocomplete="off"
+                      name="telefono"
+                      class="form-control"
+                      [class.error]="!Telefono.valid && accountDetailsForm.submitted"
+                      placeholder="Ingrese Telefono"
+                    />
+                    <span *ngIf="accountDetailsForm.submitted && Telefono.invalid" class="invalid-form">
+                      <small class="form-text text-danger" *ngIf="Telefono.errors.required"
+                        >Telefono es requerido!</small
+                      >
+                    </span>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label class="form-label">Pagina Web</label>
+                    <input
+                    type="text"
+                    name="pagina_web"
+                    class="form-control"
+                    placeholder="Ingrese Pagina Web"
+                  />
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label class="form-label" for="email">Correo Electronico</label>
+                    <input
+                      [(ngModel)]="email"
+                      #Email="ngModel"
+                      required
+                      email
+                      type="email"
+                      name="email"
+                      autocomplete="off"
+                      id="email"
+                      class="form-control"
+                      [class.error]="!Email.valid && accountDetailsForm.submitted"
+                      placeholder="Ingrese Correo Electronico"
+                      aria-label="john.doe"
+                    />
+                    <span *ngIf="accountDetailsForm.submitted" class="invalid-form">
+                      <small class="form-text text-danger" *ngIf="!Email.valid">El Correo Electronico debe ser válido!</small>
+                    </span>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label class="form-label">Actividad Economica</label>
+                    <ng-select
+                      [items]="selectBasic"
+                      placeholder="Seleccione Actividad Economica"
+                      bindLabel="name"
+                      autocomplete="off"
+                      name="actividad_economica"
+                      [(ngModel)]="actividad_economica"
+                      #ActividadEconomica="ngModel"
+                      required
+                      [class.error]="!ActividadEconomica.valid && accountDetailsForm.submitted"  
+                      >
+                    </ng-select>
+                    <span *ngIf="accountDetailsForm.submitted && ActividadEconomica.invalid" class="invalid-form">
+                      <small class="form-text text-danger" *ngIf="ActividadEconomica.errors.required"
+                        >Actividad Economica es requerido!</small
+                      >
+                    </span>
+                  </div>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                  <button
+                    (click)="horizontalWizardStepperPrevious()"
+                    class="btn btn-outline-secondary btn-prev"
+                    disabled
+                    rippleEffect
+                  >
+                    <i data-feather="arrow-left" class="align-middle mr-sm-25 mr-0"></i>
+                    <span class="align-middle d-sm-inline-block d-none">Anterior</span>
+                  </button>
+                  <button
+                    (click)="horizontalWizardStepperNext(accountDetailsForm)"
+                    type="submit"
+                    class="btn btn-primary btn-next"
+                    rippleEffect
+                  >
+                    <span class="align-middle d-sm-inline-block d-none">Siguiente</span>
+                    <i data-feather="arrow-right" class="align-middle ml-sm-25 ml-0"></i>
+                  </button>
+                </div>
+              </form>
+            </div>
+            <div id="personal-info" class="content">
+              <form #personalInfoForm="ngForm">
+                <div class="content-header">
+                  <h5 class="mb-0">Personal Info</h5>
+                  <small>Enter Your Personal Info.</small>
+                </div>
+
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label class="form-label" for="first-name">Ubicacion del Registro</label>
+                    <ng-select [items]="selectBasic" placeholder="Seleccione Ubicacion" bindLabel="name"> </ng-select>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label class="form-label" for="last-name">Nombre del Registro Mercantil</label>
+                    <ng-select [items]="selectBasic" placeholder="Seleccione Registro" bindLabel="name"> </ng-select>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label class="form-label" for="country">Fecha de Creación de la Empresa</label>
+                    <input
+                      class="form-control"
+                      placeholder="yyyy-mm-dd"
+                      name="Basic Date Picker"
+                      [(ngModel)]="basicDPdata"
+                      ngbDatepicker
+                      #basicDP="ngbDatepicker"
+                    />
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label class="form-label" for="language">Language</label>
+                    <ng-select
+                      [items]="selectMulti"
+                      [multiple]="true"
+                      [closeOnSelect]="false"
+                      [searchable]="false"
+                      bindLabel="name"
+                      name="selectLanguage"
+                      placeholder="Select people"
+                      [(ngModel)]="selectMultiSelected"
+                    >
+                      <ng-template ng-label-tmp let-item="item" let-clear="clear">
+                        <span class="ng-value-label"> {{ item.name }}</span>
+                        <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+                      </ng-template>
+                    </ng-select>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label class="form-label" for="pincode1">Numero de Folio</label>
+                    <input type="text" id="pincode1" class="form-control" placeholder="658921" />
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label class="form-label" for="city1">Numero de Protocolo</label>
+                    <input type="text" id="city1" class="form-control" placeholder="Birmingham" />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label class="form-label" for="pincode1">Numero de Tomo</label>
+                    <input type="text" id="pincode1" class="form-control" placeholder="658921" />
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label class="form-label" for="city1">Numero Patronal IVSS</label>
+                    <input type="text" id="city1" class="form-control" placeholder="Birmingham" />
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label class="form-label" for="pincode1">Ejercicio Fiscal Desde</label>
+                    <input type="text" id="pincode1" class="form-control" placeholder="658921" />
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label class="form-label" for="city1">Ejercicio Fiscal Hasta</label>
+                    <input type="text" id="city1" class="form-control" placeholder="Birmingham" />
+                  </div>
+                </div>
+
+                    <!-- Invoice repeater -->
+                        <h4 class="card-title">Utilidad en Operación del Cierre del Ejercicio Fiscal</h4>
+                        <div class="card-body">
+                          <form action="#" class="invoice-repeater">
+                            <div *ngFor="let item of items; let i = index" @heightIn>
+                              <div class="row d-flex align-items-end">
+                                <div class="col-md-3 col-12">
+                                  <div class="form-group">
+                                    <label for="itemName{{ i }}">Desde</label>
+                                    <input
+                                      type="text"
+                                      class="form-control"
+                                      [(ngModel)]="item.itemName"
+                                      name="itemName{{ i }}"
+                                      id="itemName{{ i }}"
+                                      placeholder="Fecha Desde"
+                                    />
+                                  </div>
+                                </div>
+            
+                                <div class="col-md-3 col-12">
+                                  <div class="form-group">
+                                    <label for="itemQuantity{{ i }}">Hasta</label>
+                                    <input
+                                      type="number"
+                                      class="form-control"
+                                      id="itemQuantity{{ i }}"
+                                      name="itemQuantity{{ i }}"
+                                      [(ngModel)]="item.itemCost"
+                                      placeholder="Fecha Hasta"
+                                    />
+                                  </div>
+                                </div>
+            
+                                <div class="col-md-4 col-12">
+                                  <div class="form-group">
+                                    <label for="itemQuantity{{ i }}">Monto</label>
+                                    <input
+                                      type="number"
+                                      class="form-control"
+                                      id="itemQuantity{{ i }}"
+                                      name="itemQuantity{{ i }}"
+                                      [(ngModel)]="item.itemQuantity"
+                                      placeholder="Monto"
+                                    />
+                                  </div>
+                                </div>
+            
+
+                                <div class="col-md-2 col-12 mb-50">
+                                  <div class="form-group">
+                                    <button class="btn btn-outline-danger text-nowrap px-1" (click)="deleteItem(i)" rippleEffect>
+                                      <i data-feather="x" class="mr-25"></i>
+                                      <span>Eliminar</span>
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                              <hr />
+                            </div>
+                          </form>
+                          <div class="row">
+                            <div class="col-12">
+                              <button class="btn btn-icon btn-primary" type="button" (click)="addItem()" rippleEffect>
+                                <i data-feather="plus" class="mr-25"></i>
+                                <span>Agregar</span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                    <!--/ Invoice repeater -->
+
+
+                <div class="d-flex justify-content-between">
+                  <button
+                    type="button"
+                    (click)="horizontalWizardStepperPrevious()"
+                    class="btn btn-primary btn-prev"
+                    rippleEffect
+                  >
+                    <i data-feather="arrow-left" class="align-middle mr-sm-25 mr-0"></i>
+                    <span class="align-middle d-sm-inline-block d-none">Anterior</span>
+                  </button>
+                  <button
+                    (click)="horizontalWizardStepperNext(personalInfoForm)"
+                    class="btn btn-primary btn-next"
+                    rippleEffect
+                  >
+                    <span class="align-middle d-sm-inline-block d-none">Siguiente</span>
+                    <i data-feather="arrow-right" class="align-middle ml-sm-25 ml-0"></i>
+                  </button>
+                </div>
+              </form>
+            </div>
+            <div id="address" class="content">
+              <form #addressForm="ngForm">
+                <div class="content-header">
+                  <h5 class="mb-0">Address</h5>
+                  <small>Enter Your Address.</small>
+                </div>
+
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label class="form-label" for="address">Cedula</label>
+                    <input
+                      [(ngModel)]="addressVar"
+                      #addressRef="ngModel"
+                      required
+                      type="text"
+                      id="address"
+                      name="address"
+                      class="form-control"
+                      [class.error]="addressForm.submitted && addressRef.invalid"
+                      placeholder="Ingrese Cedula de Identidad"
+                    />
+                    <span *ngIf="addressForm.submitted && addressRef.invalid" class="invalid-form">
+                      <small class="form-text text-danger" *ngIf="addressRef.errors.required"
+                        >This field is required!</small
+                      >
+                    </span>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label class="form-label" for="landmark"></label>
+                    <input
+                      [(ngModel)]="landmarkVar"
+                      #landmarkRef="ngModel"
+                      required
+                      type="text"
+                      name="landmark"
+                      id="landmark"
+                      class="form-control"
+                      [class.error]="addressForm.submitted && landmarkRef.invalid"
+                      placeholder="......"
+                    />
+                    <span *ngIf="addressForm.submitted && landmarkRef.invalid" class="invalid-form">
+                      <small class="form-text text-danger" *ngIf="landmarkRef.errors.required"
+                        >This field is required!</small
+                      >
+                    </span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label class="form-label" for="pincode1">Primer Nombre</label>
+                    <input type="text" id="pincode1" class="form-control" placeholder="Ingrese Primer Nombre" />
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label class="form-label" for="city1">Segundo Nombre</label>
+                    <input type="text" id="city1" class="form-control" placeholder="Ingrese Segundo Nombre" />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label class="form-label" for="pincode1">Primer Apellido</label>
+                    <input type="text" id="pincode1" class="form-control" placeholder="Ingrese Primer Apellido" />
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label class="form-label" for="city1">Segundo Apellido</label>
+                    <input type="text" id="city1" class="form-control" placeholder="Ingrese Segundo Apellido" />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label class="form-label" for="pincode1">Telefono de Contacto</label>
+                    <input type="text" id="pincode1" class="form-control" placeholder="Ingrese Telefono de Contacto" />
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label class="form-label" for="city1">Telefono Celular</label>
+                    <input type="text" id="city1" class="form-control" placeholder="Ingrese Telefono Celular" />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label class="form-label" for="pincode1">Fax</label>
+                    <input type="text" id="pincode1" class="form-control" placeholder="Ingrese Fax" />
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label class="form-label" for="city1">Correo Electronico</label>
+                    <input type="text" id="city1" class="form-control" placeholder="Ingrese Correo Electronico" />
+                  </div>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                  <button
+                    type="button"
+                    (click)="horizontalWizardStepperPrevious()"
+                    class="btn btn-primary btn-prev"
+                    rippleEffect
+                  >
+                    <i data-feather="arrow-left" class="align-middle mr-sm-25 mr-0"></i>
+                    <span class="align-middle d-sm-inline-block d-none">Anterior</span>
+                  </button>
+                  <button
+                    (click)="horizontalWizardStepperNext(addressForm)"
+                    class="btn btn-primary btn-next"
+                    rippleEffect
+                  >
+                    <span class="align-middle d-sm-inline-block d-none">Siguiente</span>
+                    <i data-feather="arrow-right" class="align-middle ml-sm-25 ml-0"></i>
+                  </button>
+                </div>
+              </form>
+            </div>
+            <div id="social-links" class="content">
+              <form #socialLinkForm="ngForm">
+                <div class="content-header">
+                  <h5 class="mb-0">Social Links</h5>
+                  <small>Enter Your Social Links.</small>
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label class="form-label" for="twitter">Twitter</label>
+                    <input
+                      [(ngModel)]="twitterVar"
+                      #twitterkRef="ngModel"
+                      required
+                      type="text"
+                      id="twitter"
+                      name="twitter"
+                      class="form-control"
+                      [class.error]="socialLinkForm.submitted && twitterkRef.invalid"
+                      placeholder="https://twitter.com/abc"
+                    />
+                    <span *ngIf="socialLinkForm.submitted && twitterkRef.invalid" class="invalid-form">
+                      <small class="form-text text-danger" *ngIf="twitterkRef.errors.required"
+                        >This field is required!</small
+                      >
+                    </span>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label class="form-label" for="facebook">Facebook</label>
+                    <input
+                      [(ngModel)]="facebookVar"
+                      #facebookRef="ngModel"
+                      required
+                      type="text"
+                      id="facebook"
+                      name="facebook"
+                      class="form-control"
+                      [class.error]="socialLinkForm.submitted && facebookRef.invalid"
+                      placeholder="https://facebook.com/abc"
+                    />
+                    <span *ngIf="socialLinkForm.submitted && facebookRef.invalid" class="invalid-form">
+                      <small class="form-text text-danger" *ngIf="facebookRef.errors.required"
+                        >This field is required!</small
+                      >
+                    </span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label class="form-label" for="google">Google+</label>
+                    <input
+                      [(ngModel)]="googleVar"
+                      #googleRef="ngModel"
+                      required
+                      type="text"
+                      id="google"
+                      name="google"
+                      class="form-control"
+                      [class.error]="socialLinkForm.submitted && googleRef.invalid"
+                      placeholder="https://plus.google.com/abc"
+                    />
+                    <span *ngIf="socialLinkForm.submitted && googleRef.invalid" class="invalid-form">
+                      <small class="form-text text-danger" *ngIf="googleRef.errors.required"
+                        >This field is required!</small
+                      >
+                    </span>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label class="form-label" for="linkedin">Linkedin</label>
+                    <input
+                      [(ngModel)]="linkedinVar"
+                      #linkedinRef="ngModel"
+                      required
+                      type="text"
+                      id="linkedin"
+                      name="linkedin"
+                      class="form-control"
+                      [class.error]="socialLinkForm.submitted && linkedinRef.invalid"
+                      placeholder="https://linkedin.com/abc"
+                    />
+                    <span *ngIf="socialLinkForm.submitted && linkedinRef.invalid" class="invalid-form">
+                      <small class="form-text text-danger" *ngIf="linkedinRef.errors.required"
+                        >This field is required!</small
+                      >
+                    </span>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-between">
+                  <button
+                    type="button"
+                    (click)="horizontalWizardStepperPrevious()"
+                    class="btn btn-primary btn-prev"
+                    rippleEffect
+                  >
+                    <i data-feather="arrow-left" class="align-middle mr-sm-25 mr-0"></i>
+                    <span class="align-middle d-sm-inline-block d-none">Anterior</span>
+                  </button>
+                  <button class="btn btn-success btn-submit" rippleEffect (click)="agregar(HWForm)">Guardar Registro</button>
+                </div>
+              </form>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </div>
+    <!--/ Horizontal Wizard -->
+  </div>
+</div>
