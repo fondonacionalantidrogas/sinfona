@@ -5,6 +5,8 @@ import { NgbDateStruct, NgbCalendar, NgbDate, NgbDateParserFormatter, NgbTimeStr
 
 import Stepper from 'bs-stepper';
 
+import { ApiService, IAPICore } from '@core/services/apicore/api.service';
+
 
 import { repeaterAnimation } from './form-repeater.animation';
 
@@ -61,16 +63,17 @@ export class InscriptionComponent implements OnInit {
   public telefono;
   public email;
   public actividad_economica;  
+  //  Formulario 2
+  public ubicacion_registro;
+  public registro_mercantil;
+  public fecha_creacion;
+  public numero_patronal;
 
-  public selectEstados = [
-    { name: 'Distrito Capital' },
-    { name: 'Tachira' },
-  ];
-
-  public selectMunicipios = [
-    { name: 'Libertador' },
-    { name: 'Bolivar' },
-  ];
+  
+  public MinMaxDPdata: NgbDateStruct;
+  selectEstados = [];
+  selectMunicipios = [];
+  selectActividadEconomica = [];
 
   public selectBasic = [
     { name: 'UK' },
@@ -86,6 +89,40 @@ export class InscriptionComponent implements OnInit {
     { name: 'J' },
     { name: 'G' }
   ];
+
+  public xAPI : IAPICore = {
+    funcion: '',
+    parametros: '',
+    relacional: false,
+    concurrencia : false,
+    protocolo: '',
+    ruta : '',
+    version: '',
+    retorna : false,
+    migrar : false,
+    modulo : '',
+    valores : {},
+    coleccion : '',
+    http : 0,
+    https : 0,
+    consumidores : '',
+    puertohttp : 0,
+    puertohttps : 0,
+    driver : '',
+    query : '',
+    metodo : '',
+    tipo : '',
+    prioridad : '',
+    entorno: '',
+    logs : false,
+    cache: 0,
+    estatus: false,
+    categoria : '',
+    funcionalidad : '',
+    entradas : '',
+    salidas : ''
+  };
+
 
   public basicDPdata: NgbDateStruct;
   public fromDate: NgbDate | null;
@@ -199,6 +236,7 @@ export class InscriptionComponent implements OnInit {
    * @param {FormBuilder} _formBuilder
    */
   constructor(
+    private apiService : ApiService,
     private _coreConfigService: CoreConfigService,
     private _formBuilder: FormBuilder,
     private calendar: NgbCalendar,
@@ -224,6 +262,57 @@ export class InscriptionComponent implements OnInit {
     };
   }
 
+  async ListaEstados(){
+    this.xAPI.funcion = "Fona_Read_Estados";
+    this.selectEstados = []
+    await this.apiService.Ejecutar(this.xAPI).subscribe(
+      (data) => {
+        this.selectEstados = data.Cuerpo.map( e => {
+          e.name =  e.Nombre
+          e.id = e.EstadoId
+          return e
+        });
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+  }
+
+  async ListaMunicipios(id : string) {
+    this.xAPI.funcion = "Fona_Read_Municipios";
+    this.xAPI.parametros =  id;
+    this.selectMunicipios = []
+    await this.apiService.Ejecutar(this.xAPI).subscribe(
+      (data) => {
+        this.selectMunicipios = data.Cuerpo.map( e => {
+          e.name =  e.Nombre
+          e.id = e.MunicipioId
+          return e
+        });
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+  }
+
+  async ListaActividadEconomica() {
+    this.xAPI.funcion = "Fona_Read_ActividadesEconomicas";
+    this.selectActividadEconomica = []
+    await this.apiService.Ejecutar(this.xAPI).subscribe(
+      (data) => {
+        this.selectActividadEconomica = data.Cuerpo.map( e => {
+          e.name =  e.Nombre
+          e.id = e.MunicipioId
+          return e
+        });
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+  }
 
   // Lifecycle Hooks
   // -----------------------------------------------------------------------------------------------------
@@ -231,7 +320,9 @@ export class InscriptionComponent implements OnInit {
   /**
    * On init
    */
-  ngOnInit(): void {
+  async ngOnInit() {
+    this.ListaEstados()
+    this.ListaActividadEconomica()
     this.horizontalWizardStepper = new Stepper(document.querySelector('#stepper1'), {});
 
     this.bsStepper = document.querySelectorAll('.bs-stepper');
