@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormControl } from '@angular/forms';
 
 import { NgbDateStruct, NgbCalendar, NgbDate, NgbDateParserFormatter, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 
@@ -9,7 +8,7 @@ import Stepper from 'bs-stepper';
 
 import { repeaterAnimation } from './form-repeater.animation';
 
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -26,6 +25,7 @@ import { CoreConfigService } from '@core/services/config.service';
 })
 export class InscriptionComponent implements OnInit {
 
+  public loginForm: FormGroup;
   public contentHeader: object;
   public items = [{ itemId: '', itemName: '', itemQuantity: '', itemCost: '' }];
 
@@ -132,7 +132,7 @@ export class InscriptionComponent implements OnInit {
 
 
   agregar(item: any){
-    console.log(item)
+    console.log(item.form.value)
   }
 
 
@@ -233,21 +233,6 @@ export class InscriptionComponent implements OnInit {
    */
   ngOnInit(): void {
     this.horizontalWizardStepper = new Stepper(document.querySelector('#stepper1'), {});
-
-    this.verticalWizardStepper = new Stepper(document.querySelector('#stepper2'), {
-      linear: false,
-      animation: true
-    });
-
-    this.modernWizardStepper = new Stepper(document.querySelector('#stepper3'), {
-      linear: false,
-      animation: true
-    });
-
-    this.modernVerticalWizardStepper = new Stepper(document.querySelector('#stepper4'), {
-      linear: false,
-      animation: true
-    });
 
     this.bsStepper = document.querySelectorAll('.bs-stepper');
 

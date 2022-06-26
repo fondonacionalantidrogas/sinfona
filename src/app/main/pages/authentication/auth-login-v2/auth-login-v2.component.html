@@ -13,7 +13,7 @@
     <div class="d-none d-lg-flex col-lg-8 align-items-center p-5">
       <div class="w-100 d-lg-flex align-items-center justify-content-center px-5">
         <img
-          class="img-fluid"
+          class="img-fluid drop"
           [src]="
             coreConfig.layout.skin === 'dark'
               ? 'assets/images/logos/fona.png'
@@ -59,7 +59,7 @@
           <div class="form-group">
             <div class="d-flex justify-content-between">
               <label for="login-password">Contraseña</label
-              ><a routerLink="/reset-password"><small>Has olvidado tu contraseña?</small></a>
+              ><a routerLink="/forgot-password"><small>Has olvidado tu contraseña?</small></a>
             </div>
             <div class="input-group input-group-merge form-password-toggle">
               <input
@@ -107,11 +107,11 @@
         <a routerLink="/inscripcion"><span>Crea una cuenta</span></a>
         </p>
         <div class="divider my-2">
-          <div class="divider-text">or</div>
+          <div class="divider-text">--</div>
         </div>
         <div class="auth-footer-btn d-flex justify-content-center">
-          <a class="btn btn-facebook" href="javascript:void(0)"><i data-feather="facebook"></i></a
-          ><a class="btn btn-twitter white" href="javascript:void(0)"><i data-feather="twitter"></i></a
+          <a class="btn btn-facebook" href="https://www.facebook.com/FONAoficial/" target="new"><i data-feather="facebook"></i></a
+          ><a class="btn btn-twitter white" href="https://twitter.com/FONA_oficial" target="new"><i data-feather="twitter"></i></a
           ><a class="btn btn-google" href="javascript:void(0)"><i data-feather="mail"></i></a
           ><a class="btn btn-github" href="javascript:void(0)"><i data-feather="github"></i></a>
         </div>

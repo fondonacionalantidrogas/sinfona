@@ -69,6 +69,7 @@ export class AuthLoginV2Component implements OnInit {
   }
 
   onSubmit() {
+
     this.submitted = true;
 
     // stop here if form is invalid
