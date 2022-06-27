@@ -15,58 +15,65 @@ export const menu: CoreMenu[] = [
     id: 'soporte',
     title: 'Soporte',
     type: 'collapsible',
-    // role: ['Admin'], //? To hide collapsible based on user role
+    role: ['Admin'], //? To hide collapsible based on user role
     icon: 'tool',
     children: [
       {
-        id: 'analytics',
-        title: 'Gestion Usuario',
-        type: 'item',
-        role: ['Admin'], //? To set multiple role: ['Admin', 'Client']
-        icon: 'circle',
-        url: 'dashboard/analytics'
-      },
-      {
         id: 'ecommerce',
-        title: 'Gestion Tablas',
+        title: 'Modulos Menus',
         type: 'item',
         icon: 'circle',
-        url: 'dashboard/ecommerce'
-      },
-      {
-        id: 'ecommerce',
-        title: 'Cambiar Contraseña',
-        type: 'item',
-        icon: 'circle',
-        url: 'dashboard/ecommerce'
-      },
-      {
-        id: 'ecommerce',
-        title: 'Copias de Seguridad',
-        type: 'item',
-        icon: 'circle',
-        url: 'dashboard/ecommerce'
+        url: '/menu-module'
       },
       {
         id: 'ecommerce',
         title: 'Roles de Usuarios',
         type: 'item',
         icon: 'circle',
-        url: 'dashboard/ecommerce'
+        url: '/role-user'
       },
       {
         id: 'ecommerce',
-        title: 'Perfiles de Seguridad',
+        title: 'Permisos de Usuarios',
         type: 'item',
         icon: 'circle',
-        url: 'dashboard/ecommerce'
+        url: '/permissions-user'
+      },
+      {
+        id: 'analytics',
+        title: 'Gestion Usuario',
+        type: 'item',
+        // role: ['Admin'], //? To set multiple role: ['Admin', 'Client']
+        icon: 'circle',
+        url: '/user-management'
+      },
+      {
+        id: 'ecommerce',
+        title: 'Gestion Tablas',
+        type: 'item',
+        icon: 'circle',
+        url: '/table-management'
+      },
+      {
+        id: 'ecommerce',
+        title: 'Cambiar Contraseña',
+        type: 'item',
+        icon: 'circle',
+        url: '/change-password'
+      },
+      {
+        id: 'ecommerce',
+        title: 'Copias de Seguridad',
+        type: 'item',
+        icon: 'circle',
+        url: '/backups'
       },
       {
         id: 'ecommerce',
         title: 'Auditoria',
         type: 'item',
         icon: 'circle',
-        url: 'dashboard/ecommerce'
+        url: '/audit'
       }
     ]
   },
@@ -75,7 +82,7 @@ export const menu: CoreMenu[] = [
     title: 'Registro Contribuyente',
     type: 'collapsible',
     // role: ['Admin'], //? To hide collapsible based on user role
-    icon: 'tool',
+    icon: 'file-text',
     children: [
       {
         id: 'analytics',
@@ -90,7 +97,7 @@ export const menu: CoreMenu[] = [
         title: 'Desclaracion y Pagos',
         type: 'item',
         icon: 'circle',
-        url: 'dashboard/ecommerce'
+        url: '/taxpayer-registration'
       },
       {
         id: 'ecommerce',
@@ -106,7 +113,7 @@ export const menu: CoreMenu[] = [
     title: 'Recaudación',
     type: 'collapsible',
     // role: ['Admin'], //? To hide collapsible based on user role
-    icon: 'tool',
+    icon: 'check-circle',
     children: [
       {
         id: 'analytics',
@@ -144,7 +151,7 @@ export const menu: CoreMenu[] = [
     title: 'Documentación Digital',
     type: 'collapsible',
     // role: ['Admin'], //? To hide collapsible based on user role
-    icon: 'tool',
+    icon: 'folder-plus',
     children: [
       {
         id: 'analytics',
@@ -168,7 +175,7 @@ export const menu: CoreMenu[] = [
     title: 'Reportes y Alertas',
     type: 'collapsible',
     // role: ['Admin'], //? To hide collapsible based on user role
-    icon: 'tool',
+    icon: 'alert-triangle',
     children: [
       {
         id: 'analytics',

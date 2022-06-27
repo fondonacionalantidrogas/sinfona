@@ -19,13 +19,15 @@ import { coreConfig } from 'app/app-config';
 
 import { AppComponent } from 'app/app.component';
 import { LayoutModule } from 'app/layout/layout.module';
-import { DashboardModule } from 'app/main/dashboard/dashboard.module';
 
 import { LocationStrategy, HashLocationStrategy, JsonPipe } from '@angular/common';
 import { AuthGuardGuard } from '@core/services/seguridad/auth-guard.guard';
 import { AuthInterceptorService } from '@core/services/seguridad/auth-interceptor.service';
 
-
+import { DashboardModule } from 'app/main/dashboard/dashboard.module';
+import { TaxpayerRegistrationModule } from 'app/main/taxpayer-registration/taxpayer-registration.module';
+import { SupportModule } from './main/support/support.module';
+ 
 const appRoutes: Routes = [
   {
     path: '',
@@ -45,6 +47,7 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     HttpClientModule,
     RouterModule.forRoot(appRoutes, {
+      useHash: true, // Agregar # a las rutas URL
       scrollPositionRestoration: 'enabled', // Add options right here
       relativeLinkResolution: 'legacy'
     }),
@@ -63,6 +66,8 @@ const appRoutes: Routes = [
     // App modules
     LayoutModule,
     DashboardModule,
+    TaxpayerRegistrationModule,
+    SupportModule
   ],
   providers: [
     {

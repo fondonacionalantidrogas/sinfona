@@ -81,6 +81,7 @@ export class AuthLoginV2Component implements OnInit {
     this.loading = true;
 
     // redirect to home page
+    sessionStorage.setItem("token", "ioeshfdoicheoihceih");
     setTimeout(() => {
       this._router.navigate(['/dashboard']);
     }, 100);

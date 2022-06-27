@@ -19,17 +19,54 @@ import { locale as menuFrench } from 'app/menu/i18n/fr';
 import { locale as menuGerman } from 'app/menu/i18n/de';
 import { locale as menuPortuguese } from 'app/menu/i18n/pt';
 
+import { ApiService, IAPICore } from '@core/services/apicore/api.service';
+
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
+
+  public xAPI : IAPICore = {
+    funcion: '',
+    parametros: '',
+    relacional: false,
+    concurrencia : false,
+    protocolo: '',
+    ruta : '',
+    version: '',
+    retorna : false,
+    migrar : false,
+    modulo : '',
+    valores : {},
+    coleccion : '',
+    http : 0,
+    https : 0,
+    consumidores : '',
+    puertohttp : 0,
+    puertohttps : 0,
+    driver : '',
+    query : '',
+    metodo : '',
+    tipo : '',
+    prioridad : '',
+    entorno: '',
+    logs : false,
+    cache: 0,
+    estatus: false,
+    categoria : '',
+    funcionalidad : '',
+    entradas : '',
+    salidas : ''
+  };
+
   coreConfig: any;
   menu: any;
   defaultLanguage: 'en'; // This language will be used as a fallback when a translation isn't found in the current language
   appLanguage: 'en'; // Set application default language i.e fr
-
+  menuObj = [];
   // Private
   private _unsubscribeAll: Subject<any>;
 
@@ -48,6 +85,7 @@ export class AppComponent implements OnInit, OnDestroy {
    * @param {TranslateService} _translateService
    */
   constructor(
+    private apiService : ApiService,
     @Inject(DOCUMENT) private document: any,
     private _title: Title,
     private _renderer: Renderer2,
@@ -59,9 +97,9 @@ export class AppComponent implements OnInit, OnDestroy {
     private _coreTranslationService: CoreTranslationService,
     private _translateService: TranslateService
   ) {
+    this.MenuObjX()
     // Get the application main menu
-    this.menu = menu;
-
+    this.menu = this.menuObj;
     // Register the menu to the menu service
     this._coreMenuService.register('main', this.menu);
 
@@ -237,6 +275,24 @@ export class AppComponent implements OnInit, OnDestroy {
 
     // Set the application page title
     this._title.setTitle(this.coreConfig.app.appTitle);
+  }
+
+
+  async MenuObjX() {
+    this.xAPI.funcion = "Lista_Modulo_Menu_Dinamico";
+    await this.apiService.Ejecutar(this.xAPI).subscribe(
+      (data) => {
+        data.Cuerpo.map( e => {
+          if (e.status === '1') {
+              e.children = JSON.parse(e.children)
+              this.menuObj.push(e) 
+            }
+        });
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
   }
 
   /**
