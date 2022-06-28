@@ -33,6 +33,10 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { BackupsComponent } from './backups/backups.component';
 import { AuditComponent } from './audit/audit.component';
 import { MenuModuleComponent } from './menu-module/menu-module.component';
+import { SubMenuComponent } from './menu-module/sub-menu/sub-menu.component';
+
+import { NewMenuSidebarComponent } from './menu-module/new-menu-sidebar/new-menu-sidebar.component';
+
 
 // routing
 const routes: Routes = [
@@ -75,6 +79,11 @@ const routes: Routes = [
     path: 'menu-module',
     component: MenuModuleComponent,
     canActivate:[AuthGuardGuard],
+  },
+  {
+    path: 'menu-module/sub-menu/:id',
+    component: SubMenuComponent,
+    canActivate:[AuthGuardGuard],
   }
 
 ]
@@ -84,7 +93,9 @@ const routes: Routes = [
     UserManagementComponent,
     RoleComponent,
     PermissionsComponent,
-    MenuModuleComponent
+    MenuModuleComponent,
+    SubMenuComponent,
+    NewMenuSidebarComponent
   ],
   imports: [
     CommonModule,

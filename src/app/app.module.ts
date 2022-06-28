@@ -24,10 +24,16 @@ import { LocationStrategy, HashLocationStrategy, JsonPipe } from '@angular/commo
 import { AuthGuardGuard } from '@core/services/seguridad/auth-guard.guard';
 import { AuthInterceptorService } from '@core/services/seguridad/auth-interceptor.service';
 
+//  Modulos de Enlace de cada Menu
 import { DashboardModule } from 'app/main/dashboard/dashboard.module';
-import { TaxpayerRegistrationModule } from 'app/main/taxpayer-registration/taxpayer-registration.module';
 import { SupportModule } from './main/support/support.module';
- 
+import { DigitalDocumentationModule } from './main/digital-documentation/digital-documentation.module';
+import { FinancialCollectionModule } from './main/financial-collection/financial-collection.module';
+import { TaxpayerRecordModule } from './main/taxpayer-record/taxpayer-record.module';
+import { ReportsAlertsModule } from './main/reports-alerts/reports-alerts.module';
+ //  Modulos de Enlace de cada Menu
+
+
 const appRoutes: Routes = [
   {
     path: '',
@@ -66,8 +72,11 @@ const appRoutes: Routes = [
     // App modules
     LayoutModule,
     DashboardModule,
-    TaxpayerRegistrationModule,
-    SupportModule
+    SupportModule,
+    DigitalDocumentationModule,
+    FinancialCollectionModule,
+    TaxpayerRecordModule,
+    ReportsAlertsModule
   ],
   providers: [
     {

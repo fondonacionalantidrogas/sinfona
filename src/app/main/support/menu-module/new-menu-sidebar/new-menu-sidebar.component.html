@@ -1,0 +1,83 @@
+<div class="slideout-content">
+  <!-- Modal to add new user starts-->
+  <div class="modalsd modal-slide-in sdfade new-user-modal" id="modals-slide-in">
+    <div class="modal-dialog">
+      <form class="add-new-user modal-content pt-0" (ngSubmit)="(newUserForm.form.valid)" #newUserForm="ngForm">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="toggleSidebar('new-menu-sidebar')"
+        >
+          ×
+        </button>
+        <div class="modal-header mb-1">
+          <h5 class="modal-title" id="exampleModalLabel">Nuevo Menu</h5>
+        </div>
+        <div class="modal-body flex-grow-1">
+          <div class="form-group">
+            <label class="form-label" for="basic-icon-default-fullname">Nombre del Menu</label>
+            <input
+              type="text"
+              class="form-control dt-full-name"
+              id="basic-icon-default-fullname"
+              placeholder="Ingrese nombre del menu"
+              name="name"
+              [(ngModel)]="name"
+              [class.error]="newUserForm.submitted && FNameRef.invalid"
+              #FNameRef="ngModel"
+              required
+              aria-describedby="basic-icon-default-fullname2"
+            />
+            <span *ngIf="newUserForm.submitted && FNameRef.invalid" class="invalid-form">
+              <small class="form-text text-danger" *ngIf="FNameRef.errors.required">Nombre es requerido!</small>
+            </span>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="user-role">Tipo de Menu</label>
+            <select  name="type" class="form-control">
+              <option value="item">Item</option>
+              <option value="collapsible">Collapsible</option>
+            </select>
+          </div>
+          <div class="form-group mb-2">
+            <label class="form-label" for="user-plan">Icono de Menu</label>
+            <select id="user-plan" class="form-control">
+              <option value="home"> Home </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="basic-icon-default-uname">Url</label>
+            <input
+              type="text"
+              id="basic-icon-default-uname"
+              class="form-control dt-uname"
+              placeholder="Ingrese url del menu"
+              aria-label="jdoe1"
+              aria-describedby="basic-icon-default-uname2"
+              name="url"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="user-role">Status del Menu</label>
+            <select id="user-role" class="form-control">
+              <option value="1">Activo</option>
+              <option value="0">Inactivo</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary mr-1" (click)="submit(newUserForm)" rippleEffect>Guardar</button>
+          <button
+            type="reset"
+            class="btn btn-outline-secondary"
+            (click)="toggleSidebar('new-menu-sidebar')"
+            rippleEffect
+          >
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- Modal to add new user Ends-->
+</div>

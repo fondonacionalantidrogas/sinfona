@@ -10,25 +10,42 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { CoreCommonModule } from '@core/common.module';
 
-import { TaxpayerRegistrationComponent } from './taxpayer-registration.component';
-
 import { AuthGuardGuard } from '@core/services/seguridad/auth-guard.guard';
 
 
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgSelectModule } from '@ng-select/ng-select';
 
+
+//  USer
+import { Ng2FlatpickrModule } from 'ng2-flatpickr';
+
+import { CoreDirectivesModule } from '@core/directives/directives';
+import { CorePipesModule } from '@core/pipes/pipes.module';
+import { CoreSidebarModule } from '@core/components';
+//  USer
+
+
+// 
+import { TaxpayersComponent } from './taxpayers/taxpayers.component';
+import { CommunicationsComponent } from './communications/communications.component';
+
 // routing
 const routes: Routes = [
   {
-    path: 'taxpayer-registration',
-    component: TaxpayerRegistrationComponent,
+    path: 'taxpayers',
+    component: TaxpayersComponent,
     canActivate:[AuthGuardGuard],
   },
+  {
+    path: 'communications',
+    component: CommunicationsComponent,
+    canActivate:[AuthGuardGuard],
+  }
 ]
 
 @NgModule({
-  declarations: [TaxpayerRegistrationComponent],
+  declarations: [CommunicationsComponent, TaxpayersComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -39,6 +56,10 @@ const routes: Routes = [
     ReactiveFormsModule,
     CoreCommonModule,
     ContentHeaderModule,
+    Ng2FlatpickrModule,
+    CoreDirectivesModule,
+    CorePipesModule,
+    CoreSidebarModule
   ]
 })
-export class TaxpayerRegistrationModule { }
+export class DigitalDocumentationModule { }

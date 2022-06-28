@@ -9,6 +9,8 @@ import { CoreSidebarService } from '@core/components/core-sidebar/core-sidebar.s
 
 import { ApiService, IAPICore } from '@core/services/apicore/api.service';
 
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-menu-module',
@@ -88,6 +90,7 @@ export class MenuModuleComponent implements OnInit {
   public selectedStatus = [];
   public searchValue = '';
 
+
   // Decorator
   @ViewChild(DatatableComponent) table: DatatableComponent;
 
@@ -123,19 +126,10 @@ export class MenuModuleComponent implements OnInit {
     // Subscribe config change
     this._coreConfigService.config.pipe(takeUntil(this._unsubscribeAll)).subscribe(config => {
       //! If we have zoomIn route Transition then load datatable after 450ms(Transition will finish in 400ms)
-      if (config.layout.animation === 'zoomIn') {
         setTimeout(() => {
-          // this._userListService.onUserListChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe(response => {
-            this.rows = this.users;
-            this.tempData = this.rows;
-          // });
-        }, 50);
-      } else {
-        // this._userListService.onUserListChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe(response => {
           this.rows = this.users;
           this.tempData = this.rows;
-        // });
-      }
+      }, 100);
     });
   }
 
@@ -189,6 +183,42 @@ export class MenuModuleComponent implements OnInit {
    */
   toggleSidebar(name): void {
     this._coreSidebarService.getSidebarRegistry(name).toggleOpen();
+  }
+
+  EditarMenu(name, row): void {
+    console.log(row)
+    this._coreSidebarService.getSidebarRegistry(name).toggleOpen();
+  }
+
+  DeleteMenu(menu: any): void {
+    Swal.fire({
+      title: 'Desea eliminar este registro?',
+      text: menu.title,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminarlo!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Archivo eliminado!',
+          'Satisfactoriamente!',
+          'success'
+        )
+      }
+    })
+  }
+
+  UpdateMenu(){
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'Registro actualizado con exito',
+      showConfirmButton: false,
+      timer: 1500
+    })
   }
 
   /**
