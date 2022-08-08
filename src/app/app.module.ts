@@ -6,6 +6,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import 'hammerjs';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { TranslateModule } from '@ngx-translate/core';
 import { ToastrModule } from 'ngx-toastr'; // For auth after login toast
 
@@ -76,7 +77,7 @@ const appRoutes: Routes = [
     DigitalDocumentationModule,
     FinancialCollectionModule,
     TaxpayerRecordModule,
-    ReportsAlertsModule
+    ReportsAlertsModule,
   ],
   providers: [
     {

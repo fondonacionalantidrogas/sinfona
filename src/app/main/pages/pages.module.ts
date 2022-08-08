@@ -12,6 +12,8 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
 import { InscriptionModule } from './inscription/inscription.module'
 
+
+
 @NgModule({
   declarations: [],
   imports: [

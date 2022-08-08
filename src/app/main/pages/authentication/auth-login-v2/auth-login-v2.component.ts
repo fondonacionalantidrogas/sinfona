@@ -5,6 +5,10 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { CoreConfigService } from '@core/services/config.service';
+import { IToken, LoginService } from '@core/services/seguridad/login.service';
+import Swal from 'sweetalert2';
+
+
 
 @Component({
   selector: 'app-auth-login-v2',
@@ -21,7 +25,11 @@ export class AuthLoginV2Component implements OnInit {
   public returnUrl: string;
   public error = '';
   public passwordTextType: boolean;
+  public usuario: string;
+  public clave: string;
 
+  public iToken: IToken = { token: '', };
+  public itk: IToken;
   // Private
   private _unsubscribeAll: Subject<any>;
 
@@ -34,6 +42,7 @@ export class AuthLoginV2Component implements OnInit {
     private _coreConfigService: CoreConfigService,
     private _formBuilder: FormBuilder,
     private _route: ActivatedRoute,
+    private loginService: LoginService,
     private _router: Router
   ) {
     this._unsubscribeAll = new Subject();
@@ -69,22 +78,24 @@ export class AuthLoginV2Component implements OnInit {
   }
 
   onSubmit() {
-
     this.submitted = true;
+    // this.login(this.loginForm)
 
     // stop here if form is invalid
     if (this.loginForm.invalid) {
       return;
+    }
+    if (sessionStorage.getItem("token") != undefined) {
+      this._router.navigate(['/']);
     }
 
     // Login
     this.loading = true;
 
     // redirect to home page
-    sessionStorage.setItem("token", "ioeshfdoicheoihceih");
     setTimeout(() => {
-      this._router.navigate(['/dashboard']);
-    }, 100);
+      this._router.navigate(['/']);
+    }, 200);
   }
 
   // Lifecycle Hooks
@@ -95,11 +106,10 @@ export class AuthLoginV2Component implements OnInit {
    */
   ngOnInit(): void {
     if (sessionStorage.getItem("token") != undefined) {
-      this._router.navigate(['/dashboard'])
-      return
+      this._router.navigate(['/', 'dashboard']);
    }
     this.loginForm = this._formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required]],
       password: ['', Validators.required]
     });
 
@@ -110,6 +120,50 @@ export class AuthLoginV2Component implements OnInit {
     this._coreConfigService.config.pipe(takeUntil(this._unsubscribeAll)).subscribe(config => {
       this.coreConfig = config;
     });
+  }
+
+  login() {
+    this.submitted = true;
+    this.loading = true;
+    var Xapi = {
+      "funcion": 'Fona_Read_Login',
+      "parametros": this.usuario + ',' + this.clave
+    }
+    this.loginService.getLoginExternas(Xapi).subscribe(
+      (data) => { // Success
+        this.itk = data;
+        sessionStorage.setItem("token", this.itk.token);
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Bienvenido al FONA',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        // this._router.navigate(['/dashboard']);
+        this._router.navigate(['/', 'dashboard']);
+        return
+      },
+      (error) => {
+        this.loading = false;
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+        
+        Toast.fire({
+          icon: 'error',
+          title: error.error
+        })
+      }
+    );
   }
 
   /**

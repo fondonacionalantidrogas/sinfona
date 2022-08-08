@@ -37,6 +37,9 @@ import { SubMenuComponent } from './menu-module/sub-menu/sub-menu.component';
 
 import { NewMenuSidebarComponent } from './menu-module/new-menu-sidebar/new-menu-sidebar.component';
 
+import { AuthGuard } from 'app/auth/helpers';
+    // data: { roles: ['1'],},
+
 
 // routing
 const routes: Routes = [
@@ -44,6 +47,7 @@ const routes: Routes = [
     path: 'user-management',
     component: UserManagementComponent,
     canActivate:[AuthGuardGuard],
+    // data: { roles: ["1"],},
   },
   {
     path: 'role-user',

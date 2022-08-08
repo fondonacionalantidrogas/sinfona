@@ -20,6 +20,7 @@ import { locale as menuGerman } from 'app/menu/i18n/de';
 import { locale as menuPortuguese } from 'app/menu/i18n/pt';
 
 import { ApiService, IAPICore } from '@core/services/apicore/api.service';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -97,9 +98,13 @@ export class AppComponent implements OnInit, OnDestroy {
     private _coreTranslationService: CoreTranslationService,
     private _translateService: TranslateService
   ) {
-    this.MenuObjX()
     // Get the application main menu
+    this.MenuObjX()
+
+    // this.menu = menu;
     this.menu = this.menuObj;
+    // console.info('FIJO',menu)
+    // console.info('DINAMICO',this.menu)
     // Register the menu to the menu service
     this._coreMenuService.register('main', this.menu);
 
@@ -125,7 +130,7 @@ export class AppComponent implements OnInit, OnDestroy {
   /**
    * On init
    */
-  ngOnInit(): void {
+   ngOnInit(): void{
     // Init wave effect (Ripple effect)
     Waves.init();
 
@@ -280,17 +285,35 @@ export class AppComponent implements OnInit, OnDestroy {
 
   async MenuObjX() {
     this.xAPI.funcion = "Lista_Modulo_Menu_Dinamico";
-    await this.apiService.Ejecutar(this.xAPI).subscribe(
+    await  this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
         data.Cuerpo.map( e => {
           if (e.status === '1') {
               e.children = JSON.parse(e.children)
-              this.menuObj.push(e) 
+              // e.children.role = ["1"]
+             this. menu.push(e) 
             }
         });
       },
       (error) => {
-        console.log(error)
+        // console.log(error)
+        if (error.status === 504) {
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          })
+          Toast.fire({
+            icon: 'error',
+            title: 'Error en Sandra Server'
+          })
+        }
       }
     )
   }

@@ -121,16 +121,16 @@ export class MenuModuleComponent implements OnInit {
   /**
    * On init
    */
-   ngOnInit(): void {
-    this.MenuObjX()
+   async ngOnInit() {
+    await this.MenuObjX()
     // Subscribe config change
-    this._coreConfigService.config.pipe(takeUntil(this._unsubscribeAll)).subscribe(config => {
+    // this._coreConfigService.config.pipe(takeUntil(this._unsubscribeAll)).subscribe(config => {
       //! If we have zoomIn route Transition then load datatable after 450ms(Transition will finish in 400ms)
         setTimeout(() => {
           this.rows = this.users;
           this.tempData = this.rows;
-      }, 100);
-    });
+      }, 450);
+    // });
   }
 
   // Public Methods

@@ -1,1 +1,18 @@
-<p>taxpayers works!</p>
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+      
+      <form method="post" enctype="multipart/form-data" id="forma" name="forma">
+        <input type="hidden" name="identificador"  readonly="readonly">
+        <label for="input-folder-2">Seleccionar Archivo</label>
+        <div class="file-loading">
+          <input (change)="fileSelected($event)" class="file-input" name="archivos" type="file" accept=".pdf">
+        </div>
+        <div id="errorBlock" class="help-block"></div>
+      </form>
+
+      <button class="btn bg-gradient-success text-white " (click)="SubirArchivo($event)">
+        <span class="fa fa-upload"></span>&nbsp;&nbsp;Enviar Archivos </button>
+
+
+      </div>
+    </div>

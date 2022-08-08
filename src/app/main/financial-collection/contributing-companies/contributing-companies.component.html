@@ -1,1 +1,419 @@
-<p>contributing-companies works!</p>
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    
+    <core-card
+    (events)="emittedEvents($event)"
+    [actions]="['collapse', 'expand', 'reload', 'close']"
+    [reloadTime]="'1000'"
+  >
+    <h4 class="card-title">Filtro de búsqueda</h4>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="users-list-filter">
+              <form>
+                <div class="row">
+                  <div class="col-12 col-md-4">
+                    <fieldset class="form-group">
+                      <ng-select
+                        [items]="selectStatus"
+                        [(ngModel)]="selectedStatus"
+                        name="selectedStatus"
+                        bindLabel="name"
+                        placeholder="Seleccione Status"
+                        (change)="filterByStatus($event)"
+                      ></ng-select>
+                    </fieldset>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </div>
+  </core-card>
+
+      <!-- User List -->
+      <section class="users-list-wrapper">
+
+        <div class="card">
+          <div class="row">
+            <div class="col-md-6 col-12">
+              <div class="d-flex justify-content-between align-items-center m-1">
+                <label class="d-flex align-items-center"
+                  >Mostrar
+                  <select class="form-control mx-25" [(ngModel)]="selectedOption">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                  </select>
+                  Registros</label
+                >
+              </div>
+            </div>
+            <div class="col-md-6 col-12 d-flex justify-content-start justify-content-md-end">
+              <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pb-md-0">
+                <label class="d-flex align-items-center ml-1 ml-md-0"
+                  >Buscar:<input
+                    [(ngModel)]="searchValue"
+                    name="searchValue"
+                    type="search"
+                    class="form-control ml-25"
+                    placeholder="Nombre Empresa"
+                    (keyup)="filterUpdate($event)"
+                    (search)="filterUpdate($event)"
+                /></label>
+              </div>
+            </div>
+          </div>
+          <ngx-datatable
+            [rows]="rows"
+            [rowHeight]="50"
+            class="bootstrap core-bootstrap"
+            [limit]="selectedOption"
+            [columnMode]="ColumnMode.force"
+            [headerHeight]="50"
+            [footerHeight]="50"
+            [scrollbarH]="true"
+          >
+            <ngx-datatable-column name="Nombre" prop="RazonSocial" [width]="200">
+              <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+                <div class="d-flex align-items-center">
+                  <div class="cell-line-height">
+                    <a routerLink="#" class="font-medium-1 d-block">
+                      <span class="font-weight-bold">{{ row.RazonSocial.substring(0,30) }} ...</span></a>
+                    <span class="text-muted font-small-2"> RIF - {{ row.Rif }} | {{ row.PaginaWeb  }}</span>
+                  </div>
+                </div>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Email" prop="CorreoElectronico" [width]="20">
+              <ng-template let-CorreoElectronico="value" ngx-datatable-cell-template>
+                <div>
+                  <span class="font-weight-bold"><i class="fa fa-envelope"></i>  <a href="mailto:{{CorreoElectronico}}"> {{ CorreoElectronico.substring(0,20) }} </a> </span>
+                </div>
+              </ng-template>
+            </ngx-datatable-column>
+          
+            <ngx-datatable-column name="Telefono" prop="Telefono" [width]="10">
+              <ng-template let-Telefono="value" ngx-datatable-cell-template>
+                <div>
+                  <i class="fa fa-phone"></i> 
+                  <a href="tel:{{Telefono}}">
+                  {{ Telefono }}
+                </a>
+                </div>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Codigo IVSS" prop="CodigoIvss" [width]="10">
+              <ng-template let-CodigoIvss="value" ngx-datatable-cell-template>
+                <div>
+                  <i
+                    class="feather font-medium-3"
+                    [ngClass]="'icon-slack text-info'"
+                  ></i>
+                  {{ CodigoIvss }}
+                </div>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Status" prop="EstatusEmpresa" [width]="10">
+              <ng-template let-EstatusEmpresa="value" ngx-datatable-cell-template>
+                <div
+                  class="badge badge-pill"
+                  [ngClass]="{
+                    'badge-light-success': EstatusEmpresa == '1',
+                    'badge-light-secondary': EstatusEmpresa == '2',
+                    'badge-light-warning': EstatusEmpresa == '3',
+                    'badge-light-warning': EstatusEmpresa == '4'
+                  }"
+                >
+                  {{ EstatusEmpresa == '1' ? 'Activa' : 'Inactiva' }}
+                </div>
+              </ng-template>
+            </ngx-datatable-column> 
+
+            <ngx-datatable-column name="Acción" [width]="5" [sortable]="false">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                <div ngbDropdown container="body">
+                  <button ngbDropdownToggle type="button" class="btn icon-btn btn-sm hide-arrow" rippleEffect>
+                    <span [data-feather]="'settings'" [class]="'cursor-pointer'"></span>
+                  </button>
+                  <div ngbDropdownMenu>
+                    <a ngbDropdownItem  (click)="ModalDetails(DetailsModal,row,this.ListEmpresasAportes(row.EmpresaId))">
+                      <span [data-feather]="'file-text'" [size]="16" [class]="'mr-50'"></span>
+                      Detalles
+                    </a>
+                  </div>
+                </div>
+              </ng-template>
+            </ngx-datatable-column>
+
+          </ngx-datatable>
+        </div>
+      </section>
+      <!--/ User List -->
+    </div>
+  
+  </div>
+
+
+      <!-- Modal Detalles -->
+  <ng-template #DetailsModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="myModalLabel160">Detalles de Registro</h5>
+      <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+      <!-- Invoice -->
+      <div class="col-xl-12 col-md-12 col-12 printRef">
+            <!-- Header Starts -->
+            <div class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0">
+              <div>
+                <div class="logo-wrapper">
+                  <h3 class="text-primary invoice-logo">{{ apiData.RazonSocial }}</h3>
+                </div>
+                <p class="card-text mb-25"><strong>RIF:</strong> {{ apiData.Rif }}</p>
+                <p class="card-text mb-25"><strong>Email:</strong> {{ apiData.CorreoElectronico }}</p>
+                <p class="card-text mb-0"><strong>Sitio Web:</strong> {{ apiData.PaginaWeb ? apiData.PaginaWeb : 'N/A' }}</p>
+                <p class="card-text mb-0"><strong>Teléfonos:</strong> {{ apiData.Telefono }} |  {{ apiData.Fax }}</p>
+                <p class="card-text mb-25"><strong>Actividad Económica:</strong> {{ apiData.ActividadEconomica }}</p>
+                <p class="card-text mb-25"><strong>Estado:</strong> {{ apiData.localidad.estado }} | <strong>Ciudad:</strong> {{ apiData.Ciudad }} | <strong>Municipio:</strong> {{ apiData.localidad.municipio }} | <strong>Parroquia:</strong> {{ apiData.localidad.parroquia }}</p>
+
+                <p class="card-text mb-25">{{ apiData.Direccion }}</p>
+              </div>
+              <div class="mt-md-0 mt-2">
+                <!-- <h4 class="invoice-title">IVSS
+                  <span class="invoice-number">#{{ apiData.CodigoIvss }}</span>
+                </h4> -->
+                <div class="invoice-date-wrapper">
+                  <p class="invoice-date-title"><strong>Inicio Fiscal:</strong> {{ apiData.FechaInicioFiscal ? apiData.FechaInicioFiscal : '0000-00-00' }}</p>
+                  <!-- <p class="invoice-date">{{ apiData.FechaInicioFiscal }}</p> -->
+                </div>
+                <div class="invoice-date-wrapper">
+                  <p class="invoice-date-title"><strong>Cierre Fiscal:</strong> {{ apiData.FechaCierreFiscal ? apiData.FechaCierreFiscal : '0000-00-00' }}</p>
+                  <!-- <p class="invoice-date">{{ apiData.FechaCierreFiscal }}</p> -->
+                </div>
+                <div class="invoice-date-wrapper">
+                  <p class="invoice-date-title"><strong>Empleados:</strong> {{ apiData.CantidadEmpleados }}</p>
+                  <!-- <p class="invoice-date">{{ apiData.FechaCierreFiscal }}</p> -->
+                </div>
+              </div>
+            </div>
+            <!-- Header Ends -->
+          </div>
+
+          <hr class="invoice-spacing" />
+
+          <!-- Address And Contact Starts -->
+          <div class="card-body invoice-padding pt-0">
+            <div class="row invoice-spacing">
+              <div class="col-xl-4 p-0 mt-xl-0 mt-2">
+                <h6 class="mb-2"><strong>Datos legales y Financieros</strong></h6>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td class="pr-1">Registro Mercantil:</td>
+                      <td>{{ apiData.DocumentoProtocolo }} </td>
+                    </tr>
+                    <tr>
+                      <td class="pr-1">Creación de la Empresa:</td>
+                      <td>{{ apiData.FechaCreo }}</td>
+                    </tr>
+                    <tr>
+                      <td class="pr-1">Número de Folio:</td>
+                      <td>{{ apiData.DocumentoFolio }}</td>
+                    </tr>
+                    <tr>
+                      <td class="pr-1">Número de Protocolo:</td>
+                      <td>{{ apiData.DocumentoProtocolo }}</td>
+                    </tr>
+                    <tr>
+                      <td class="pr-1">Número de Tomo:</td>
+                      <td>{{ apiData.DocumentoTomo }}</td>
+                    </tr>
+                    <tr>
+                      <td class="pr-1">Número Patronal:</td>
+                      <td>{{ apiData.CodigoIvss }}</td>
+                    </tr>
+                    <tr>
+                      <td class="pr-1">Fecha Cierre:</td>
+                      <td>{{ apiData.FechaCierreFiscal }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="col-xl-4 p-0 mt-xl-0 mt-2">
+                <h6 class="mb-2"><strong>Datos del Representante Legal</strong></h6>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td class="pr-1">Cedula:</td>
+                      <td>{{ rowsEmpresasContactos[0].cedula }} </td>
+                    </tr>
+                    <tr>
+                      <td class="pr-1">Nombres:</td>
+                      <td> {{ rowsEmpresasContactos[0].nombres }}</td>
+                    </tr>
+                    <tr>
+                      <td class="pr-1">Apellidos:</td>
+                      <td>{{ rowsEmpresasContactos[0].apellidos }}</td>
+                    </tr>
+                    <tr>
+                      <td class="pr-1">Teléfono de Contacto:</td>
+                      <td>{{ rowsEmpresasContactos[0].telefono1 }}</td>
+                    </tr>
+                    <tr>
+                      <td class="pr-1">Telefono de Celular:</td>
+                      <td>{{ rowsEmpresasContactos[0].telefono2 }}</td>
+                    </tr>
+                    <tr>
+                      <td class="pr-1">Correo Electrónico:</td>
+                      <td>{{ rowsEmpresasContactos[0].email }}</td>
+                    </tr>
+                    <tr>
+                      <td class="pr-1">Tipo de Persona:</td>
+                      <td>xxx</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="col-xl-4 p-0 mt-xl-0 mt-2">
+                <h6 class="mb-2"><strong>Datos del Usuario</strong></h6>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td class="pr-1">Usuario:</td>
+                      <td> {{ rowsEmpresasUsuario[0].codigo }} </td>
+                    </tr>
+                    <tr>
+                      <td class="pr-1">Cedula:</td>
+                      <td>  {{ rowsEmpresasUsuario[0].cedula }} </td>
+                    </tr>
+                    <tr>
+                      <td class="pr-1">Nombres:</td>
+                      <td> {{ rowsEmpresasUsuario[0].nombres }}</td>
+                    </tr>
+                    <tr>
+                      <td class="pr-1">Apellidos:</td>
+                      <td> {{ rowsEmpresasUsuario[0].apellidos }}</td>
+                    </tr>
+                    <tr>
+                      <td class="pr-1">Teléfono de Contacto:</td>
+                      <td>{{ rowsEmpresasUsuario[0].telefono2 }}</td>
+                    </tr>
+                    <tr>
+                      <td class="pr-1">Telefono de Celular:</td>
+                      <td>{{ rowsEmpresasUsuario[0].telefono1 }}</td>
+                    </tr>
+                    <tr>
+                      <td class="pr-1">Correo Electrónico:</td>
+                      <td>{{ rowsEmpresasUsuario[0].email1 }}</td>
+                    </tr>
+                    <tr>
+                      <td class="pr-1">Cargo:</td>
+                      <td>{{ rowsEmpresasUsuario[0].cargo }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!-- Address And Contact Ends -->
+
+          <hr class="invoice-spacing" />
+          <!-- Invoice Description Starts -->
+          <div class="table-responsive">
+            <h6 class="mb-2"><strong>Detalles de Aportes</strong></h6>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Razon Social</th>
+                  <th>Aporte</th>
+                  <th>Año</th>
+                  <th>Banco</th>
+                  <th>N° Deposito</th>
+                  <th>Monto</th>
+                  <th>Fecha Sistema</th>
+                  <th>Fecha Banco</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let item of rowsEmpresasAportes">
+                <tr>
+                  <td>{{ item.RazonSocial }}</td>
+                  <td>{{ item.Articulo }}</td>
+                  <td>{{ item.FechaAporte }}</td>
+                  <td>{{ item.FechaAporte }}</td>
+                  <td>{{ item.ReferenciaBancaria }}</td>
+                  <td>{{ item.Monto }}</td>
+                  <td>{{ item.FechaDocumento }}</td>
+                  <td>{{ item.FechaBancoPago }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- Invoice Description Ends -->
+
+          <hr class="invoice-spacing" />
+          <!-- Invoice Description Starts -->
+          <div class="table-responsive">
+            <h6 class="mb-2"><strong>Detalles de Planillas de Multas, Intereses y/o Fiscalización</strong></h6>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Razon Social</th>
+                  <th>Aporte</th>
+                  <th>Año</th>
+                  <th>Banco</th>
+                  <th>N° Deposito</th>
+                  <th>Monto</th>
+                  <th>Fecha Sistema</th>
+                  <th>Fecha Banco</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let item of rowsEmpresasAportes">
+                <tr>
+                  <td>{{ item.RazonSocial }}</td>
+                  <td>{{ item.Articulo }}</td>
+                  <td>{{ item.FechaAporte }}</td>
+                  <td>{{ item.FechaAporte }}</td>
+                  <td>{{ item.ReferenciaBancaria }}</td>
+                  <td>{{ item.Monto }}</td>
+                  <td>{{ item.FechaDocumento }}</td>
+                  <td>{{ item.FechaBancoPago }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- Invoice Description Ends -->
+
+          <!-- <hr class="invoice-spacing" /> -->
+
+          <!-- Invoice Note Starts -->
+          <!-- <div class="card-body invoice-padding pt-0" align="center">
+            <div class="row">
+              <div class="col-12">
+                <span class="font-weight-bold">Nota: </span>
+                <span >
+                  <strong><a font color="red">Este documento es meramente referencial para el contribuyente, el mismo no tendrá ninguna validez para fines legales.</a></strong>
+                </span >
+              </div>
+            </div>
+          </div> -->
+          <!-- Invoice Note Ends -->
+        </div>
+      <!--/ Invoice -->
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" (click)="modal.close('Accept click')" rippleEffect>
+        Cerrar
+      </button>
+    </div>
+  </ng-template>
+  <!-- <app-details></app-details> -->
+    <!-- Modal Detalles -->

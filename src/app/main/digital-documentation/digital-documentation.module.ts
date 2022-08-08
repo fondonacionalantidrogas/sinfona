@@ -4,6 +4,9 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
+import { CoreCardModule } from '@core/components/core-card/core-card.module';
+
+
 import { ContentHeaderModule } from 'app/layout/components/content-header/content-header.module';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -15,6 +18,8 @@ import { AuthGuardGuard } from '@core/services/seguridad/auth-guard.guard';
 
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgSelectModule } from '@ng-select/ng-select';
+
+import { AuthGuard } from 'app/auth/helpers';
 
 
 //  USer
@@ -36,6 +41,7 @@ const routes: Routes = [
     path: 'taxpayers',
     component: TaxpayersComponent,
     canActivate:[AuthGuardGuard],
+    // data: { roles: ['1'],}
   },
   {
     path: 'communications',
@@ -48,6 +54,7 @@ const routes: Routes = [
   declarations: [CommunicationsComponent, TaxpayersComponent],
   imports: [
     CommonModule,
+    CoreCardModule,
     RouterModule.forChild(routes),
     NgbModule,
     FormsModule,

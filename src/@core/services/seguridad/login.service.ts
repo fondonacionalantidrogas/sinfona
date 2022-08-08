@@ -64,6 +64,21 @@ export class LoginService {
     var url = this.URL + 'wusuario/login'
     return this.http.post<IToken>(url, usuario )
   }
+
+  getLoginExternas(parametro: any) : Observable<IToken>{
+    const token = localStorage.getItem('token')
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': ' GET, POST, OPTIONS',
+                'Access-Control-Allow-Headers': 'Origin, Accept, X-Auth-Token',
+                'Authorization': 'Bearer ' + token
+            }
+        }
+    var url = this.URL + 'wusuario/access'
+    return this.http.post<IToken>(url, parametro, config )
+  }
   
   makeUser(user: IUsuario): Observable<any>{    
     var url = this.URL + 'identicacion'   

@@ -4,6 +4,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
+import { CoreCardModule } from '@core/components/core-card/core-card.module';
+
 import { ContentHeaderModule } from 'app/layout/components/content-header/content-header.module';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -26,11 +28,14 @@ import { CoreSidebarModule } from '@core/components';
 //  USer
 
 
+
 // 
 import { ContributingCompaniesComponent } from './contributing-companies/contributing-companies.component';
 import { TaxpayerPaymentsComponent } from './taxpayer-payments/taxpayer-payments.component';
-import { PaymentConsolidationComponent } from './payment-consolidation/payment-consolidation.component';
 import { GoalManagementComponent } from './goal-management/goal-management.component';
+import { DetailsComponent } from './modals/contributing-companies/details/details.component';
+import { AddComponent } from './modals/contributing-companies/add/add.component';
+import { UpdateComponent } from './modals/contributing-companies/update/update.component';
 
 // routing
 const routes: Routes = [
@@ -43,17 +48,12 @@ const routes: Routes = [
     path: 'taxpayer-payments',
     component: TaxpayerPaymentsComponent,
     canActivate:[AuthGuardGuard],
-  },
-  {
-    path: 'payment-consolidation',
-    component: PaymentConsolidationComponent,
-    canActivate:[AuthGuardGuard]
-   }
-   ,
+  }
+  ,
   {
     path: 'goal-management',
     component: GoalManagementComponent,
-    canActivate:[AuthGuardGuard]
+    canActivate:[AuthGuardGuard],
    }
 ]
 
@@ -61,14 +61,17 @@ const routes: Routes = [
   declarations: [
     ContributingCompaniesComponent,
     TaxpayerPaymentsComponent,
-    PaymentConsolidationComponent,
-    GoalManagementComponent
+    GoalManagementComponent,
+    DetailsComponent,
+    AddComponent,
+    UpdateComponent,
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     NgbModule,
     FormsModule,
+    CoreCardModule,
     NgxDatatableModule,
     NgSelectModule,
     ReactiveFormsModule,

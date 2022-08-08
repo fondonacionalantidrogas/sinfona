@@ -1,1 +1,277 @@
-<p>registration-management works!</p>
+<div class="card card-congratulation-medal">
+  <div class="card-body">
+
+
+    <ul ngbNav #navCenter="ngbNav" class="nav nav-pills justify-content-center">
+      <li ngbNavItem>
+        <a ngbNavLink>Empresa</a>
+        <ng-template ngbNavContent>
+              <!-- Invoice -->
+    <div class="col-xl-12 col-md-12 col-12 printRef">
+      <!-- Header Starts -->
+      <div class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0">
+        <div>
+          <div class="logo-wrapper">
+            <h3 class="text-primary invoice-logo"> {{ DataEmpresa[0].RazonSocial }}</h3>
+          </div>
+          <p class="card-text mb-25"><strong>RIF:</strong> {{ DataEmpresa[0].Rif }}</p>
+          <p class="card-text mb-25"><strong>Email:</strong> {{ DataEmpresa[0].CorreoElectronico }}</p>
+          <p class="card-text mb-0"><strong>Sitio Web:</strong> {{ DataEmpresa[0].PaginaWeb }}</p>
+          <p class="card-text mb-0"><strong>Teléfonos:</strong> {{ DataEmpresa[0].Telefono }}</p>
+          <p class="card-text mb-25"><strong>Actividad Económica:</strong> {{ DataEmpresa[0].Actividad[0].ActividaEconomica  }}</p>
+          <p class="card-text mb-25"><strong>Estado:</strong> {{ DataEmpresa[0].Ubi[0].estado }} | <strong>Ciudad:</strong> {{ DataEmpresa[0].Ciudad }} | <strong>Municipio:</strong>  {{ DataEmpresa[0].Ubi[0].municipio }} | <strong>Parroquia:</strong>  {{ DataEmpresa[0].Ubi[0].parroquia }}</p>
+
+          <p class="card-text mb-25">{{ DataEmpresa[0].Direccion }}</p>
+        </div>
+        <div class="mt-md-0 mt-2">
+          <!-- <h4 class="invoice-title">IVSS
+            <span class="invoice-number">#{{ apiData.CodigoIvss }}</span>
+          </h4> -->
+          <div class="invoice-date-wrapper">
+            <p class="invoice-date-title"><strong>Inicio Fiscal:</strong> {{ DataEmpresa[0].FechaInicioFiscal ? DataEmpresa[0].FechaInicioFiscal : '00-00-0000' }}</p>
+            <!-- <p class="invoice-date">{{ apiData.FechaInicioFiscal }}</p> -->
+          </div>
+          <div class="invoice-date-wrapper">
+            <p class="invoice-date-title"><strong>Cierre Fiscal:</strong>  {{ DataEmpresa[0].FechaCierreFiscal ? DataEmpresa[0].FechaCierreFiscal : '00-00-0000' }}</p>
+            <!-- <p class="invoice-date">{{ apiData.FechaCierreFiscal }}</p> -->
+          </div>
+          <div class="invoice-date-wrapper">
+            <p class="invoice-date-title"><strong>Empleados:</strong> {{ DataEmpresa[0].CantidadEmpleados ? DataEmpresa[0].CantidadEmpleados : 'N/A' }}</p>
+            <!-- <p class="invoice-date">{{ apiData.FechaCierreFiscal }}</p> -->
+          </div>
+        </div>
+      </div>
+      <!-- Header Ends -->
+    </div>
+
+    <hr class="invoice-spacing" />
+
+    <!-- Address And Contact Starts -->
+    <div class="card-body invoice-padding pt-0">
+      <div class="row invoice-spacing">
+        <div class="col-xl-4 p-0 mt-xl-0 mt-2">
+          <h6 class="mb-2"><strong>Datos legales y Financieros</strong></h6>
+          <table>
+            <tbody>
+              <tr>
+                <td class="pr-1">Registro Mercantil:</td>
+                <!-- <td>Registromercantil </td> -->
+              </tr>
+              <tr>
+                <td class="pr-1">Creación de la Empresa:</td>
+                <td>{{ DataEmpresa[0].DocumentoFecha }}</td>
+              </tr>
+              <tr>
+                <td class="pr-1">Número de Folio:</td>
+                <td>{{ DataEmpresa[0].DocumentoFolio }}</td>
+              </tr>
+              <tr>
+                <td class="pr-1">Número de Protocolo:</td>
+                <td>{{ DataEmpresa[0].DocumentoProtocolo }}</td>
+              </tr>
+              <tr>
+                <td class="pr-1">Número de Tomo:</td>
+                <td>{{ DataEmpresa[0].DocumentoTomo }}</td>
+              </tr>
+              <tr>
+                <td class="pr-1">Número Patronal:</td>
+                <td>{{ DataEmpresa[0].CodigoIvss }}</td>
+              </tr>
+              <tr>
+                <td class="pr-1">Fecha Cierre:</td>
+                <td>{{ DataEmpresa[0].FechaCierreFiscal }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-xl-4 p-0 mt-xl-0 mt-2">
+          <h6 class="mb-2"><strong>Datos del Representante Legal</strong></h6>
+          <table>
+            <tbody>
+              <tr>
+                <td class="pr-1">Cedula:</td>
+                <!-- <td>{{ rowsEmpresasContactos[0].cedula }} </td> -->
+              </tr>
+              <tr>
+                <td class="pr-1">Nombres:</td>
+                <!-- <td> {{ rowsEmpresasContactos[0].nombres }}</td> -->
+              </tr>
+              <tr>
+                <td class="pr-1">Apellidos:</td>
+                <!-- <td>{{ rowsEmpresasContactos[0].apellidos }}</td> -->
+              </tr>
+              <tr>
+                <td class="pr-1">Teléfono de Contacto:</td>
+                <!-- <td>{{ rowsEmpresasContactos[0].telefono1 }}</td> -->
+              </tr>
+              <tr>
+                <td class="pr-1">Telefono de Celular:</td>
+                <!-- <td>{{ rowsEmpresasContactos[0].telefono2 }}</td> -->
+              </tr>
+              <tr>
+                <td class="pr-1">Correo Electrónico:</td>
+                <!-- <td>{{ rowsEmpresasContactos[0].email }}</td> -->
+              </tr>
+              <tr>
+                <td class="pr-1">Tipo de Persona:</td>
+                <!-- <td>xxx</td> -->
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-xl-4 p-0 mt-xl-0 mt-2">
+          <h6 class="mb-2"><strong>Datos del Usuario</strong></h6>
+          <table>
+            <tbody>
+              <tr>
+                <td class="pr-1">Usuario:</td>
+                <!-- <td> {{ rowsEmpresasUsuario[0].codigo }} </td> -->
+              </tr>
+              <tr>
+                <td class="pr-1">Cedula:</td>
+                <!-- <td>  {{ rowsEmpresasUsuario[0].cedula }} </td> -->
+              </tr>
+              <tr>
+                <td class="pr-1">Nombres:</td>
+                <!-- <td> {{ rowsEmpresasUsuario[0].nombres }}</td> -->
+              </tr>
+              <tr>
+                <td class="pr-1">Apellidos:</td>
+                <!-- <td> {{ rowsEmpresasUsuario[0].apellidos }}</td> -->
+              </tr>
+              <tr>
+                <td class="pr-1">Teléfono de Contacto:</td>
+                <!-- <td>{{ rowsEmpresasUsuario[0].telefono2 }}</td> -->
+              </tr>
+              <tr>
+                <td class="pr-1">Telefono de Celular:</td>
+                <!-- <td>{{ rowsEmpresasUsuario[0].telefono1 }}</td> -->
+              </tr>
+              <tr>
+                <td class="pr-1">Correo Electrónico:</td>
+                <!-- <td>{{ rowsEmpresasUsuario[0].email1 }}</td> -->
+              </tr>
+              <tr>
+                <td class="pr-1">Cargo:</td>
+                <!-- <td>{{ rowsEmpresasUsuario[0].cargo }}</td> -->
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- Address And Contact Ends -->
+        </ng-template>
+      </li>
+      <li ngbNavItem>
+        <a ngbNavLink>Detalles de Aportes</a>
+        <ng-template ngbNavContent>
+                <!-- Basic Alerts start -->
+      <div class="content-wrapper container-xxl p-0">
+        <div class="content-body">
+          <!-- Invoice List -->
+          <section class="invoice-list-wrapper">
+            <div class="card">
+              <!-- Invoice List Header -->
+              <div class="row">
+                <div class="col-md-6 col-12">
+                  <div class="d-flex justify-content-between align-items-center m-1">
+                    <div class="d-flex align-items-center">
+                      <label class="d-flex align-items-center"
+                        >Mostrar
+                        <select class="form-control mx-25" [(ngModel)]="selectedOption">
+                          <option value="10">10</option>
+                          <option value="25">25</option>
+                          <option value="50">50</option>
+                          <option value="100">100</option>
+                        </select>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="
+                    col-md-6 col-lg-4 col-12
+                    d-flex
+                    justify-content-start justify-content-md-end
+                    align-items-center
+                    offset-lg-2
+                  "
+                >
+                  <div class="row pr-1 pb-1 pb-md-0 align-items-center w-100">
+                    <div class="col-10 col-md-6 pr-0">
+                      <label class="d-flex align-items-center mb-0 ml-1 ml-md-0"
+                        ><input
+                          [(ngModel)]="searchValue"
+                          name="searchValue"
+                          type="search"
+                          class="form-control"
+                          placeholder="Buscar..."
+                          (keyup)="filterUpdate($event)"
+                          (search)="filterUpdate($event)"
+                      /></label>
+                    </div>
+                    <div class="col-10 col-md-6 mt-2 ml-1 ml-md-0 mt-md-0">
+                      <fieldset class="form-group mb-0">
+                        <ng-select
+                          [items]="selectStatus"
+                          [(ngModel)]="selectedStatus"
+                          bindLabel="name"
+                          placeholder="Status"
+                          (change)="filterByStatus($event)"
+                        ></ng-select>
+                      </fieldset>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--/ Invoice List Header -->
+      
+              <!-- Invoice List Table -->
+              <ngx-datatable
+                [rows]="rows"
+                [rowHeight]="50"
+                class="bootstrap core-bootstrap"
+                [limit]="selectedOption"
+                [columnMode]="ColumnMode.force"
+                [headerHeight]="50"
+                [footerHeight]="50"
+                [scrollbarH]="true"
+              >
+              
+              <ngx-datatable-column name="Referencia" prop="ReferenciaBancaria" [width]="100"> </ngx-datatable-column>
+              <ngx-datatable-column name="Aporte" prop="Articulo" [width]="100"> </ngx-datatable-column>
+              <ngx-datatable-column name="Año" prop="FechaAporte" [width]="100"> </ngx-datatable-column>
+              <ngx-datatable-column name="Monto" prop="Monto" [width]="100"> </ngx-datatable-column>
+              <ngx-datatable-column name="Fecha Aporte" prop="FechaDocumento" [width]="100"> </ngx-datatable-column>
+              <ngx-datatable-column name="Fecha Banco" prop="FechaBancoPago" [width]="100"> </ngx-datatable-column>
+
+          
+              </ngx-datatable>
+              <!--/ Invoice List Table -->
+            </div>
+          </section>
+          <!--/ Invoice List -->
+        </div>
+      </div>
+      <!-- Basic Alerts end -->
+        </ng-template>
+      </li>
+      <li ngbNavItem>
+        <a ngbNavLink>Detalles de Multas</a>
+        <ng-template ngbNavContent>
+          <p>
+            Chocolate croissant cupcake croissant jelly donut. Cheesecake toffee apple pie chocolate bar
+            biscuit tart croissant. Lemon drops danish cookie. Oat cake macaroon icing tart lollipop cookie
+            sweet bear claw. Toffee jelly-o pastry cake dessert chocolate bar jelly beans fruitcake. Dragée
+            sweet fruitcake dragée biscuit halvah wafer gingerbread dessert. Gummies fruitcake brownie gummies
+            tart pudding.
+          </p>
+        </ng-template>
+      </li>
+    </ul>
+    <div [ngbNavOutlet]="navCenter" class="mt-1"></div>
+      
+    
+  </div>
+  </div>

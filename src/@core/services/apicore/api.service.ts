@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-
+import jwt_decode from "jwt-decode";
 
 
 export interface IAPICore {
@@ -47,6 +47,12 @@ export interface ObjectoGenerico {
   obse: string
 }
 
+export interface DocumentoAdjunto {
+	archivo	 ?:	string //CodeEncrypt
+	usuario	 ?:	string
+	documento	 ?:	string
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -73,6 +79,7 @@ export class ApiService {
     return this.http.post<any>(url, xAPI, this.httpOptions);
   }
 
+  
   Listar(): Observable<any> {
     var url = this.URL + 'listar';
     return this.http.get<any>(url, this.httpOptions);
@@ -92,6 +99,22 @@ export class ApiService {
     var url = this.URL + "lmodulos";
     return this.http.get<any>(url, this.httpOptions)
   }
+
+  DecodeJWT(){
+    var token = sessionStorage.getItem('token');
+    var decodedHeader = jwt_decode(token);
+    return decodedHeader
+  }
+
+     //EnviarArchivos generales
+     EnviarArchivos(frm : FormData ) : Observable<any>{
+      var httpOptions = {
+        headers: new HttpHeaders({
+          'Authorization': 'Bearer ' + sessionStorage.getItem('token') 
+        })
+      };
+      return this.http.post<any>(this.URL + "subirarchivos", frm, httpOptions);
+    }
 
   //ListarArchivos
   ListarArchivos(id: string): Observable<any> {

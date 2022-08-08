@@ -16,6 +16,8 @@ import { AuthGuardGuard } from '@core/services/seguridad/auth-guard.guard';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgSelectModule } from '@ng-select/ng-select';
 
+import { CoreCardModule } from '@core/components/core-card/core-card.module';
+
 
 //  USer
 import { Ng2FlatpickrModule } from 'ng2-flatpickr';
@@ -27,18 +29,12 @@ import { CoreSidebarModule } from '@core/components';
 
 
 import { DeclarationPaymentsComponent } from './declaration-payments/declaration-payments.component';
-import { SolvencyFormsComponent } from './solvency-forms/solvency-forms.component'
 import { RegistrationManagementComponent } from './registration-management/registration-management.component';
 // routing
 const routes: Routes = [
   {
     path: 'declaration-payments',
     component: DeclarationPaymentsComponent,
-    canActivate:[AuthGuardGuard],
-  },
-  {
-    path: 'solvency-forms',
-    component: SolvencyFormsComponent,
     canActivate:[AuthGuardGuard],
   },
   {
@@ -51,7 +47,6 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     DeclarationPaymentsComponent,
-  SolvencyFormsComponent,
   RegistrationManagementComponent
   ],
   imports: [
@@ -61,6 +56,7 @@ const routes: Routes = [
     FormsModule,
     NgxDatatableModule,
     NgSelectModule,
+    CoreCardModule,
     ReactiveFormsModule,
     CoreCommonModule,
     ContentHeaderModule,

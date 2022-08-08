@@ -1,12 +1,9 @@
 <div class="auth-wrapper auth-v2">
   <div class="auth-inner row">
     <!-- Brand logo-->
-    <!-- <div class="brand-logo">
-    <img src="assets/images/banner/cintillo-fona-carabobo.jpg" class="banner-fona" alt="banner" height="80px"  />
-    </div> -->
     <a class="brand-logo">
       <img src="{{ coreConfig.app.appLogoImage }}" alt="brand-logo" height="28" />
-      <h2 class="brand-text text-primary ml-1">FONA</h2>
+      <h2 class="brand-text text-primary ml-1">{{ coreConfig.app.appName }}</h2>
       </a>
     <!-- /Brand logo-->
     <!-- Left Text-->
@@ -37,20 +34,13 @@
           </div>
         </ngb-alert>
 
-        <form class="auth-login-form mt-2" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <form class="auth-login-form mt-2" [formGroup]="loginForm" (ngSubmit)="login()">
           <div class="form-group">
             <label class="form-label" for="login-email">Email</label>
-            <input
-              type="text"
-              autocomplete="off"
-              formControlName="email"
-              class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
-              placeholder="admin@demo.com"
-              aria-describedby="login-email"
-              autofocus=""
-              tabindex="1"
-            />
+            <input type="text" [(ngModel)]="usuario" [ngModelOptions]="{standalone: true, required: true}"
+                class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
+                placeholder="admin@code-epic.com" aria-describedby="login-email" autofocus="" tabindex="1"
+                autocomplete="false" />
             <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
               <div *ngIf="f.email.errors.required">El correo electrónico es requerido</div>
               <div *ngIf="f.email.errors.email">El correo electrónico debe ser una dirección de correo electrónico válida</div>
@@ -62,16 +52,10 @@
               ><a routerLink="/forgot-password"><small>Has olvidado tu contraseña?</small></a>
             </div>
             <div class="input-group input-group-merge form-password-toggle">
-              <input
-                [type]="passwordTextType ? 'text' : 'password'"
-                formControlName="password"
-                class="form-control form-control-merge"
-                [ngClass]="{ 'is-invalid error': submitted && f.password.errors }"
-                placeholder="············"
-                autocomplete="off"
-                aria-describedby="login-password"
-                tabindex="2"
-              />
+              <input [type]="passwordTextType ? 'text' : 'password'" [(ngModel)]="clave"
+                  [ngModelOptions]="{standalone: true, required: true}" class="form-control form-control-merge"
+                  [ngClass]="{ 'is-invalid error': submitted && f.password.errors }" placeholder="············"
+                  aria-describedby="login-password" tabindex="2" autocomplete="false" />
               <div class="input-group-append">
                 <span class="input-group-text cursor-pointer"
                   ><i

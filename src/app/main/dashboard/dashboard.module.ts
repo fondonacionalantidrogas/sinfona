@@ -14,6 +14,7 @@ import { CoreCommonModule } from '@core/common.module';
 import { DashboardComponent } from './dashboard.component'
 
 import { AuthGuardGuard } from '@core/services/seguridad/auth-guard.guard';
+import { AuthGuard } from 'app/auth/helpers';
 
 // routing
 const routes: Routes = [
@@ -21,6 +22,7 @@ const routes: Routes = [
     path: 'dashboard',
     component: DashboardComponent,
     canActivate:[AuthGuardGuard],
+    // data: { roles: ['1'],},
   },
 ]
 

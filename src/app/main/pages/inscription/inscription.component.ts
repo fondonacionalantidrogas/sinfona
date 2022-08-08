@@ -12,9 +12,6 @@ import { repeaterAnimation } from './form-repeater.animation';
 
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
-
 import { CoreConfigService } from '@core/services/config.service';
 
 
@@ -36,6 +33,12 @@ export class InscriptionComponent implements OnInit {
     itemQuantity: '',
     itemCost: ''
   };
+
+
+  profileForm = new FormGroup({
+    nombre: new FormControl(''),
+    lastName: new FormControl(''),
+  });
 
   // snippet code variable
 
@@ -85,7 +88,6 @@ export class InscriptionComponent implements OnInit {
   ];
 
   public selectRIF = [
-    { name: 'V' },
     { name: 'J' },
     { name: 'G' }
   ];
@@ -295,6 +297,10 @@ export class InscriptionComponent implements OnInit {
         console.log(error)
       }
     )
+  }
+
+  onSubmit() {
+    console.warn(this.profileForm.value);
   }
 
   async ListaActividadEconomica() {

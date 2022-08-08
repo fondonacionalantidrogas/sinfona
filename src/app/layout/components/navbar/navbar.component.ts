@@ -16,7 +16,11 @@ import { User } from 'app/auth/models';
 import { coreConfig } from 'app/app-config';
 import { Router } from '@angular/router';
 import { LoginService } from '@core/services/seguridad/login.service';
+import { ApiService } from '@core/services/apicore/api.service';
 import Swal from 'sweetalert2';
+
+
+import jwt_decode from "jwt-decode";
 
 @Component({
   selector: 'app-navbar',
@@ -25,6 +29,8 @@ import Swal from 'sweetalert2';
   encapsulation: ViewEncapsulation.None
 })
 export class NavbarComponent implements OnInit, OnDestroy {
+
+
   public horizontalMenu: boolean;
   public hiddenMenu: boolean;
 
@@ -32,17 +38,22 @@ export class NavbarComponent implements OnInit, OnDestroy {
   public currentSkin: string;
   public prevSkin: string;
 
-  public currentUser: User;
+  public currentUser;
 
   public languageOptions: any;
   public navigation: any;
   public selectedLanguage: any;
+  public token : any
+
+public nombre = ''
+public cargo = ''
 
   @HostBinding('class.fixed-top')
   public isFixed = false;
 
   @HostBinding('class.navbar-static-style-on-scroll')
   public windowScrolled = false;
+
 
   // Add .navbar-static-style-on-scroll on scroll using HostListener & HostBinding
   @HostListener('window:scroll', [])
@@ -78,6 +89,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
    */
   constructor(
     private loginService: LoginService,
+    private apiservice: ApiService,
     private _router: Router,
     private _authenticationService: AuthenticationService,
     private _coreConfigService: CoreConfigService,
@@ -178,8 +190,17 @@ export class NavbarComponent implements OnInit, OnDestroy {
    * On init
    */
   ngOnInit(): void {
+
     // get the currentUser details from localStorage
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+    this.token =  jwt_decode(sessionStorage.getItem('token'));
+
+    this.cargo = this.token.Usuario[0].Cargo
+    this.nombre = this.token.Usuario[0].Nombres +' '+ this.token.Usuario[0].Apellidos
+
+    localStorage.setItem('currentUser', JSON.stringify(this.token.Usuario[0]))
+    // console.log(this.token.Usuario)
 
     // Subscribe to the config changes
     this._coreConfigService.config.pipe(takeUntil(this._unsubscribeAll)).subscribe(config => {
@@ -216,6 +237,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
       id: this._translateService.currentLang
     });
   }
+
+
 
   /**
    * On destroy

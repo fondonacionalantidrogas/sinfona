@@ -51,7 +51,7 @@
           </div>
         </div>
         <div class="bs-stepper-content">
-          <form  (ngSubmit)="(HWForm.form.valid)" #HWForm="ngForm">
+          <form  [formGroup]="profileForm" (ngSubmit)="onSubmit()" #HWForm="ngForm">
             <div id="account-details" class="content">
               <form #accountDetailsForm="ngForm">
                 <div class="content-header">
@@ -698,7 +698,7 @@
                     <i data-feather="arrow-left" class="align-middle mr-sm-25 mr-0"></i>
                     <span class="align-middle d-sm-inline-block d-none">Anterior</span>
                   </button>
-                  <button class="btn btn-success btn-submit" rippleEffect (click)="agregar(HWForm)">Guardar Registro</button>
+                  <button class="btn btn-success btn-submit" type="submit" rippleEffect  >Guardar Registro</button>
                 </div>
               </form>
             </div>

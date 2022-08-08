@@ -16,6 +16,8 @@ import { CoreSidebarService } from '@core/components/core-sidebar/core-sidebar.s
 })
 export class UserManagementComponent implements OnInit {
 
+  public contentHeader: object
+
   public users = [
     {
       id: 1,
@@ -830,6 +832,24 @@ export class UserManagementComponent implements OnInit {
    * On init
    */
   ngOnInit(): void {
+    this.contentHeader = {
+      headerTitle: 'Soporte',
+      actionButton: true,
+      breadcrumb: {
+        type: '',
+        links: [
+          {
+            name: 'Gestion de Usuarios',
+            isLink: true,
+            link: '/'
+          },
+          {
+            name: 'Lista General de Usuarios',
+            isLink: false
+          }
+        ]
+      }
+    }
     // Subscribe config change
     this._coreConfigService.config.pipe(takeUntil(this._unsubscribeAll)).subscribe(config => {
       //! If we have zoomIn route Transition then load datatable after 450ms(Transition will finish in 400ms)
