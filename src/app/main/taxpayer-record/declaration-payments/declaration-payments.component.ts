@@ -3,6 +3,7 @@ import { Subject } from 'rxjs';
 import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
 import { ApiService, IAPICore } from '@core/services/apicore/api.service';
 import { NgbModal, NgbActiveModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
+import { PdfService } from '@core/services/pdf/pdf.service';
 
 
 @Component({
@@ -225,6 +226,7 @@ export class DeclarationPaymentsComponent implements OnInit {
   constructor(
     private apiService : ApiService,
     private modalService: NgbModal,
+    private pdf: PdfService,
 
   ) {
   }
@@ -240,6 +242,8 @@ export class DeclarationPaymentsComponent implements OnInit {
     this.rows = this.data;
     this.tempData = this.rows;
     this.tempFilterData = this.rows;
+
+    this.pdf.CertificadoPago()
   }
 
   // Public Methods

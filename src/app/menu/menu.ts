@@ -6,7 +6,7 @@ export const menu: CoreMenu[] = [
   // Dashboard
     {
       id: 'dashboard',
-      title: 'Dashboard',
+      title: 'Inicio',
       icon: 'home',
       // role: ['Admin'],
       type: 'item',
